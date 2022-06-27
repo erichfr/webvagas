@@ -1,7 +1,7 @@
 <main>
 
 <section>
-    <a href="cadastrar.php">
+    <a href="index.php">
         <button class="btn btn-success">Voltar</button>
     </a>
 </section>
