@@ -57,7 +57,7 @@ class Database{
             $this->connection = new PDO('mysql:host='.self::HOST.';dbname='.self::NAME,self::USER,self::PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
-            die('ERROR: ' .$e->getMessage());
+            die('ERROR: '.$e->getMessage());
         }
     }
     /**
@@ -72,7 +72,7 @@ class Database{
           $statement->execute($params);
           return $statement;  
         }catch(PDOException $e){
-            die('ERROR: ' .$e->getMessage());
+            die('ERROR: '.$e->getMessage());
         }
     }
     /**
@@ -83,7 +83,7 @@ class Database{
     public function insert($values){
         // Dados da query
         $fields = array_keys($values);
-        $binds = array_pad([], count($fields), '?');
+        $binds = array_pad([], count($fields),'?');
 
         $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
         
@@ -105,9 +105,9 @@ class Database{
 
     public function select($where = null, $order = null, $limit = null, $fields = '*'){
         // Dados da Query
-        $where = strlen($where) ? 'WHERE' .$where : '';
-        $order = strlen($order) ? 'ORDER BY' .$order : '';
-        $limit = strlen($limit) ? 'LIMIT' .$limit : '';    
+        $where = strlen($where) ? 'WHERE '.$where : '';
+        $order = strlen($order) ? 'ORDER BY '.$order : '';
+        $limit = strlen($limit) ? 'LIMIT '.$limit : '';    
         
         // Monta a query
         $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;  

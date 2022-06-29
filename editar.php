@@ -12,10 +12,10 @@ if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
 
 
 $objVaga = Vaga::getVaga($_GET['id']);
-/* echo "<pre>";
+echo "<pre>";
 print_r($objVaga);
 echo "</pre>";
-exit; */
+exit;
 
 
 //Validação POST
