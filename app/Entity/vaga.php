@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Db\Database;
+
 class Vaga{
     /**
      * Identificador único da vaga
@@ -43,10 +45,16 @@ class Vaga{
         $this->data = date('Y-m-d H:i:s');
 
         //Inserir a vaga no banco
-        
-        // Atribuir Id
-
+        $objDatabase = new Database('vagas');
+        $this->id = $objDatabase->insert([
+                                        'titulo' => $this->titulo,
+                                        'descricao' => $this->descricao,
+                                        'ativo' => $this->ativo,
+                                        'data' => $this->data
+        ]);
+   
         // Retornar sucesso
+        return true;
     }
 
 }

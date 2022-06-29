@@ -1,9 +1,10 @@
 <?php 
-// Conexao com banco de dados usando coceito query builder
+// Conexao com banco de dados usando query builder
 
 namespace App\Db;
-use \PDO;
 
+use \PDO;
+use \PDOException;
 
 class Database{
     /**
@@ -52,6 +53,49 @@ class Database{
      * @var string
      */
     private function setConnection(){
-        $this->connection;
+        try{
+            $this->connection = new PDO('mysql:host='.self::HOST.';dbname='.self::NAME,self::USER,self::PASS);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $e){
+            die('ERROR: ' .$e->getMessage());
+        }
     }
+    /**
+     * Metodo para executar queries do banco de dados
+     * @param string $query
+     * @param array $params
+     * @return PDOStatement  
+     */
+    public function execute($query, $params = []){
+        try{
+          $statement = $this->connection->prepare($query);
+          $statement->execute($params);
+          return $statement;  
+        }catch(PDOException $e){
+            die('ERROR: ' .$e->getMessage());
+        }
+    }
+    /**
+     * Metodo para inserir dados no banco de dados
+     * @param array $values[ field => value]
+     * @return integer ID inserido  
+     */
+    public function insert($values){
+        // Dados da query
+        $fields = array_keys($values);
+        $binds = array_pad([], count($fields), '?');
+
+        $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
+        
+        // Executa o Insert
+        $this->execute($query, array_values($values));
+
+        // Retorna o ID inserido
+        return $this->connection->lastInsertId();
+        
+    }
+
+
+
+
 }

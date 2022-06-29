@@ -4,7 +4,6 @@ require __DIR__ ."./vendor/autoload.php";
 
 use \App\Entity\Vaga;
 
-
 //Validação POST
 if(isset($_POST['titulo'],$_POST['descricao'],$_POST['ativo'])){
     $objVaga = new Vaga;
@@ -14,6 +13,8 @@ if(isset($_POST['titulo'],$_POST['descricao'],$_POST['ativo'])){
     $objVaga->ativo = $_POST['ativo'];
     $objVaga->cadastrar();
 
+    header('Location: index.php?status=success');
+    exit;
 
     /* echo "<pre>";
     print_r($objVaga);
