@@ -1,23 +1,24 @@
-<?php 
+<?php
 
-require __DIR__ ."./vendor/autoload.php";
+require __DIR__.'/vendor/autoload.php';
+
+define('TITLE','Cadastrar vaga');
 
 use \App\Entity\Vaga;
+$obVaga = new Vaga;
 
-//Validação POST
+//VALIDAÇÃO DO POST
 if(isset($_POST['titulo'],$_POST['descricao'],$_POST['ativo'])){
-    $objVaga = new Vaga;
 
-    $objVaga->titulo = $_POST['titulo'];
-    $objVaga->descricao = $_POST['descricao'];
-    $objVaga->ativo = $_POST['ativo'];
-    $objVaga->cadastrar();
+  $obVaga->titulo    = $_POST['titulo'];
+  $obVaga->descricao = $_POST['descricao'];
+  $obVaga->ativo     = $_POST['ativo'];
+  $obVaga->cadastrar();
 
-    header('Location: index.php?status=success');
-    exit;
+  header('location: index.php?status=success');
+  exit;
 }
 
-
-include __DIR__ . "./includes/header.php";
-include __DIR__ . "./includes/formulario.php";
-include __DIR__ . "./includes/footer.php";
+include __DIR__.'/includes/header.php';
+include __DIR__.'/includes/formulario.php';
+include __DIR__.'/includes/footer.php';
